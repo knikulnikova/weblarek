@@ -5,6 +5,11 @@ import { Cart } from "./components/models/Cart.ts";
 import { Buyer } from "./components/models/Buyer.ts";
 
 import { apiProducts } from "./utils/data.ts";
+import { ApiData } from "./components/ApiData.ts";
+import { Api } from "./components/base/Api.ts";
+import { API_URL } from "./utils/constants.ts";
+
+import { IApi, IResponseData } from "./types/index.ts";
 
 console.log("Тестируем модель каталога товаров");
 const catalogModel = new Catalog();
@@ -52,3 +57,14 @@ console.log(
   "Результат валидации после очистки данных: ",
   buyerModel.validateData(),
 );
+
+console.log("Получаем данные с сервера");
+const api: IApi = new Api(API_URL);
+const apiData = new ApiData(api);
+const response: IResponseData = await apiData.getData();
+console.log("Данные полученные с сервера: ", response);
+
+const catalog = new Catalog();
+catalog.setProducts(response.items);
+console.log("Массив товаров с сервера: ", catalog.getProducts());
+console.log("Товар по id с сервера: ", catalog.getProduct(response.items[0].id));
