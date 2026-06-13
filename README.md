@@ -125,20 +125,20 @@ Presenter - презентер содержит основную логику п
 ```
 
 #### Интерфейс IBuyer:  
-Иформация о покупателе.  
+Информация о покупателе.  
 
 Тип TPayment:  
-`type TPayment = "card" | "cash" | ""`  
+`type TPayment = "online" | "cash"`  
 
 Свойства интерфейса:  
-`payment` - способ оплаты (тип TPayment).  
+`payment` - способ оплаты (тип TPayment или null).  
 `email` - электронная почта покупателя.  
 `phone` - номер телефона покупателя.  
 `address` -  адрес доставки.  
 
 ```
   interface IBuyer {  
-    payment: TPayment;  
+    payment: TPayment | null;  
     email: string;  
     phone: string;  
     address: string;  
@@ -150,17 +150,16 @@ Presenter - презентер содержит основную логику п
 #### Модель Catalog  
 Хранит товары, которые можно купить в приложении.  
 
-Конструктор:  
-`constructor(products: IProduct[])` - В конструктор передается массив всех товаров интернет-магазина.  
+Конструктор класса не принимает параметров.    
 
 Поля класса:   
-`_products: IProduct[]` - хранит массив всех товаров.  
-`_card: IProduct | null = null` - хранит товар, выбранный для подробного отображения.  
+`products: IProduct[] = []` - хранит массив всех товаров.  
+`card: IProduct | null = null` - хранит товар, выбранный для подробного отображения.  
 
 Методы:  
 `setProducts(products: IProduct[]): void` - сохранение массива товаров полученного в параметрах метода.  
 `getProducts(): IProduct[]` - получение массива товаров, сохраненных раннее.  
-`getProduct(id: string): IProduct` - получение одного товара по его id.  
+`getProduct(id: string): IProduct | null` - получение одного товара по его id.  
 `setCard(card: IProduct): void` - сохранение товара для подробного отображения.  
 `getCard(): IProduct | null` - получение товара для подробного отображения.  
 
@@ -170,7 +169,7 @@ Presenter - презентер содержит основную логику п
 Конструктор класса не принимает параметров.  
 
 Поля класса:  
-`_cartProducts: IProduct[] = []` - хранит массив товаров, выбранных покупателем для покупки.  
+`cartProducts: IProduct[] = []` - хранит массив товаров, выбранных покупателем для покупки.  
 
 Методы:  
 `getCartProducts(): IProduct[]` - получение массива товаров, которые находятся в корзине.  
@@ -187,16 +186,16 @@ Presenter - презентер содержит основную логику п
 Конструктор класса не принимает параметров.  
 
 Поля класса:  
-`_payment: TPayment = ""` - выбранный способ оплаты.  
-`_address: string = ""` - адрес доставки.  
-`_phone: string = ""` - номер телефона покупателя.  
-`_email: string = ""` - электронная почта покупателя.  
+`payment: TPayment | null = null` - выбранный способ оплаты.  
+`address: string = ""` - адрес доставки.  
+`phone: string = ""` - номер телефона покупателя.  
+`email: string = ""` - электронная почта покупателя.  
 
 Методы:  
 `setPayment(payment: TPayment): void` - сохранение способа оплаты.  
 `setAddress(address: string): void` - сохранение адреса доставки.  
 `setPhone(phone: string): void` - сохранение номера телефона.  
 `setEmail(email: string): void` - сохранение электронной почты.  
-`getBuyerData(): IBuyer` - получение всех данных покупателя;  
-`removeBuyerData(): void` - очистка данных покупателя;  
-`validateData(): {payment?: string; email?: string; phone?: string; address?: string;}` - валидация данных.  Возвращает объект с сообщениями об ошибках для невалидных полей, для валидных полей соответствующие свойства в объекте отсутствуют.
+`getBuyerData(): IBuyer` - получение всех данных покупателя.  
+`removeBuyerData(): void` - очистка данных покупателя.  
+`validateData(): {payment?: string; email?: string; phone?: string; address?: string;}` - валидация данных. Возвращает объект с сообщениями об ошибках для невалидных полей, для валидных полей соответствующие свойства в объекте отсутствуют.
