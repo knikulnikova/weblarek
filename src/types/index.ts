@@ -23,12 +23,7 @@ export interface IBuyer {
     address: string;
 }
 
-export type TErrors = {
-    payment?: string; 
-    email?: string; 
-    phone?: string; 
-    address?: string;
-}
+export type TErrors = Partial<Record<keyof IBuyer, string>>;
 
 export interface IOrder extends IBuyer {
     total: number;

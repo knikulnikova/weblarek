@@ -8,10 +8,10 @@ export class ApiData {
   }
 
   getData(): Promise<IResponseData> {
-    return this.api.get("/product/");
+    return this.api.get<IResponseData>("/product/");
   }
 
   sendData(data: IOrder): Promise<IResponseOrder> {
-    return this.api.post("/order", data);
+    return this.api.post<IResponseOrder>("/order", data);
   }
 }

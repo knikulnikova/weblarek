@@ -59,12 +59,22 @@ console.log(
 );
 
 console.log("Получаем данные с сервера");
-const api: IApi = new Api(API_URL);
-const apiData = new ApiData(api);
-const response: IResponseData = await apiData.getData();
-console.log("Данные полученные с сервера: ", response);
-
 const catalog = new Catalog();
-catalog.setProducts(response.items);
-console.log("Массив товаров с сервера: ", catalog.getProducts());
-console.log("Товар по id с сервера: ", catalog.getProduct(response.items[0].id));
+
+async function init(): Promise<void> {
+  const api: IApi = new Api(API_URL);
+  const apiData = new ApiData(api);
+  const response: IResponseData = await apiData.getData();
+
+  console.log("Данные полученные с сервера: ", response);
+
+  catalog.setProducts(response.items);
+
+  console.log("Массив товаров с сервера: ", catalog.getProducts());
+  console.log(
+    "Товар по id с сервера: ",
+    catalog.getProduct(response.items[0].id),
+  );
+}
+
+init().catch(console.error);
