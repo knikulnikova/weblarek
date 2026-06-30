@@ -215,3 +215,201 @@ Presenter - презентер содержит основную логику п
 `getData(): Promise<IResponseData>` - метод выполняет запрос на сервер с помощью метода get класса Api и получает с сервера объект с данными товаров: общее количество товаров и массив товаров.   
 
 `sendData(data: IOrder): Promise<IResponseOrder>` - метод отправляет данные о покупателе и выбранных товарах на сервер с помощью метода post класса Api.  
+
+### Слой представления  
+
+#### Класс Header  
+Компонент шапки сайта, наследуется от класса Component. Отображает счетчик товаров в корзине пользователя и генерирует событие открытия корзины при нажатии на соответствующую кнопку.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент компонента шапки сайта.  
+
+Поля класса:  
+`cartButton: HTMLButtonElement` - элемент кнопки корзины в шапке сайта.  
+`counterElement: HTMLElement` - элемент счетчика на корзине.  
+
+Методы:  
+`set counter(value: number): void` - устанавливает значение счетчика.  
+
+События:  
+`cart:open` - генерируется при клике по кнопке корзины.  
+
+#### Класс Gallery  
+Компонент каталога карточек товаров, наследуется от класса Component. Отображает все товары интернет-магазина.  
+
+Конструктор:  
+`constructor(container: HTMLElement)` - принимает корневой DOM-элемент компонента галереи/каталога.  
+
+Поля класса:  
+`galleryElement: HTMLElement` - элемент галереи/каталога товаров.  
+
+Методы:  
+`set gallery(items: HTMLElement[]): void` - отображает массив карточек товаров интернет-магазина.  
+
+#### Класс Card  
+Родительский компонент карточек товаров, наследуется от класса Component. Класс является дженериком и принимает в переменной `T` тип данных. Содержит общий функционал, используемый всеми типами карточек.  
+
+Конструктор:  
+`constructor(container: HTMLElement)` - принимает корневой DOM-элемент карточки товара. 
+
+Поля класса:  
+`titleElement: HTMLElement` - элемент с названием товара.  
+`priceElement: HTMLElement` - элемент с ценой товара.  
+
+Методы:  
+`set title(value: string): void` - устанавливает название товара.  
+`set price(value: number | null): void` - устанавливает цену товара, цена может отсутствовать.  
+
+#### Класс CardCart 
+Компонент карточки товара в корзине, наследуется от класса Card.  
+
+Конструктор:  
+`constructor(container: HTMLElement, actions?: ICardActions)` - принимает корневой DOM-элемент карточки товара в корзине и объект с обработчиками событий.  
+
+Поля класса:  
+`deleteButton: HTMLButtonElement` - элемент кнопки удаления товара из корзины.  
+`indexElement: HTMLElement` - элемент с номером товара в корзине.  
+
+Методы:  
+`set index(value: number): void` - устанавливает номер товара в корзине.  
+
+События:  
+`card:delete` - при клике на кнопку удаления товара вызывается обработчик `onClick`, переданный через объект `actions`.  
+
+#### Класс CardCatalog  
+Компонент карточки товара в каталоге, наследуется от класса Card.  
+
+Конструктор:  
+`constructor(container: HTMLElement, actions?: ICardActions)` - принимает корневой DOM-элемент карточки товара в каталоге и объект с обработчиками событий.  
+
+Поля класса:  
+`categoryElement: HTMLElement` - элемент с категорией товара.  
+`imageElement: HTMLImageElement` - элемент с изображением товара.  
+
+Методы:  
+`set category(value: string): void` - устанавливает категорию товара.  
+`set image(value: string): void` - устанавливает изображение товара.  
+
+События:  
+`card:select` - при клике на карточку товара вызывается обработчик `onClick`, переданный через объект `actions`.  
+
+#### Класс CardPreview  
+Компонент карточки c полным описанием товара, наследуется от класса Card.  
+
+Конструктор:  
+`constructor(container: HTMLElement, actions?: ICardActions)` - принимает корневой DOM-элемент карточки товара и объект с обработчиками событий.  
+
+Поля класса:  
+`categoryElement: HTMLElement` - элемент с категорией товара.  
+`imageElement: HTMLImageElement` - элемент с изображением товара.  
+`textElement: HTMLElement` - элемент с описанием товара.  
+`cardButton: HTMLButtonElement` - элемент кнопки управления товаром.  
+
+Методы:  
+`set category(value: string): void` - устанавливает категорию товара.  
+`set image(value: string): void` - устанавливает изображение товара.  
+`set text(value: string): void` - устанавливает описание товара.  
+`set buttonText(value: string): void` - устанавливает текст кнопки карточки товара.  
+`set buttonDisabled(value: boolean): void` - изменяет состояние кнопки карточки товара.  
+
+События:  
+`card:toggle-cart` - при клике на кнопку карточки товара вызывается обработчик `onClick`, переданный через объект `actions`.  
+
+#### Класс Modal  
+Компонент модального окна, наследуется от класса Component.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент модального окна.  
+
+Поля класса:  
+`modalCloseButton: HTMLButtonElement` - элемент кнопки закрытия модального окна.  
+`modalContentElement: HTMLElement` - элемент содержащий контент модального окна.  
+
+Методы:  
+`set content(item: HTMLElement): void` - устанавливает содержимое модального окна.  
+`open(): void` - открывает модальное окно.  
+`close(): void` - закрывает модальное окно.  
+
+События: 
+`modal:close` - генерируется при клике по кнопке закрытия модального окна или по области вне содержимого модального окна.  
+
+#### Класс Cart  
+Компонент корзины товаров, наследуется от класса Component.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент корзины.  
+
+Поля класса:  
+`listElement: HTMLElement` - элемент отображающий товары находящиеся в корзине.  
+`orderButton: HTMLButtonElement` - элемент кнопки для оформления заказа.  
+`totalPriceElement: HTMLElement` - элемент отображающий общую сумму товаров в корзине.  
+
+Методы:  
+`set list(items: HTMLElement[]): void` - отображает список карточек товаров добавленных в корзину, а при отсутствии товаров выводит сообщение «Корзина пуста».  
+`set totalPrice(value: number): void` - устанавливает общую сумму товаров в корзине.  
+`set orderButtonDisabled(value: boolean): void` - изменяет состояние кнопки оформления заказа.  
+
+События:  
+`cart:order` - генерируется при клике по кнопке оформления заказа.  
+
+#### Класс Form  
+Родительский компонент форм, наследуется от класса Component. Класс является дженериком и принимает в переменной `T` тип данных, отображаемых в форме.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент формы.  
+
+Поля класса:  
+`errorsElement: HTMLElement` - элемент для вывода ошибки при валидации.  
+`submitButton: HTMLButtonElement` - элемент кнопки подтверждения формы.  
+
+Методы:  
+`set errors(value: TErrors): void` - отображает ошибки валидации формы.  
+`set submitButtonDisabled(value: boolean): void` - изменяет состояние кнопки отправки формы.  
+
+События:  
+`form:submit` - генерируется при отправке формы.  
+`form:input` - генерируется при изменении значений полей формы.  
+
+#### Класс OrderForm  
+Компонент формы первого шага оформления заказа: способа оплаты и адреса доставки, наследуется от класса Form.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент формы заказа.  
+
+Поля класса:  
+`paymentButtons: HTMLButtonElement[]` - элементы кнопок выбора способа оплаты.  
+`addressInput: HTMLInputElement` - поле ввода адреса доставки.  
+
+Методы:  
+`set payment(value: TPayment): void` - устанавливает выбранный способ оплаты.  
+`set address(value: string): void` - устанавливает адрес доставки.  
+
+#### Класс ContactsForm  
+Компонент формы второго шага оформления заказа: номера телефона и email, наследуется от класса Form.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент формы контактов.  
+
+Поля класса:  
+`emailInput: HTMLInputElement` - поле ввода email.  
+`phoneInput: HTMLInputElement` - поле ввода номера телефона.  
+
+Методы:  
+`set email(value: string): void` - устанавливает email.  
+`set phone(value: string): void` - устанавливает номер телефона.  
+
+#### Класс OrderSuccess  
+Компонент подтверждения оформления заказа, наследуется от класса Component.  
+
+Конструктор:  
+`constructor(events: IEvents, container: HTMLElement)` - принимает брокер событий и корневой DOM-элемент подтверждения заказа.  
+
+Поля класса:  
+`orderSuccessButton: HTMLButtonElement` - элемент кнопки закрытия окна подтверждения заказа.  
+`descriptionElement: HTMLElement` - элемент отображающий сообщение о списанной сумме заказа.  
+
+Методы:  
+`set description(value: number): void` - отображает сообщение о сумме, списанной за заказ.  
+
+События:  
+`success:close` - генерируется при клике по кнопке закрытия окна подтверждения заказа.  

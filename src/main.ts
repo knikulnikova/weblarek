@@ -59,7 +59,7 @@ console.log(
 );
 
 console.log("Получаем данные с сервера");
-const catalog = new Catalog();
+const productsCatalog = new Catalog();
 
 async function init(): Promise<void> {
   const api: IApi = new Api(API_URL);
@@ -68,13 +68,9 @@ async function init(): Promise<void> {
 
   console.log("Данные полученные с сервера: ", response);
 
-  catalog.setProducts(response.items);
+  productsCatalog.setProducts(response.items);
 
-  console.log("Массив товаров с сервера: ", catalog.getProducts());
-  console.log(
-    "Товар по id с сервера: ",
-    catalog.getProduct(response.items[0].id),
-  );
+  console.log("Массив товаров с сервера: ", productsCatalog.getProducts());
 }
 
 init().catch(console.error);
