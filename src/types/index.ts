@@ -39,3 +39,7 @@ export interface IResponseOrder {
     id: string;
     total: number;
 }
+
+export interface ICardActions {
+    onClick?: () => void;
+}
