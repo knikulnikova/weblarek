@@ -1,4 +1,5 @@
 import { IBuyer, TPayment, TErrors } from "../../types/index.ts";
+import { IEvents } from "../base/Events.ts";
 
 export class Buyer {
   private payment: TPayment | null = null;
@@ -6,20 +7,26 @@ export class Buyer {
   private phone: string = "";
   private email: string = "";
 
+  constructor(protected events: IEvents) {}
+
   setPayment(payment: TPayment): void {
     this.payment = payment;
+    this.events.emit('buyer:changed');
   }
 
   setAddress(address: string): void {
     this.address = address;
+    this.events.emit('buyer:changed');
   }
 
   setPhone(phone: string): void {
     this.phone = phone;
+    this.events.emit('buyer:changed');
   }
 
   setEmail(email: string): void {
     this.email = email;
+    this.events.emit('buyer:changed');
   }
 
   getBuyerData(): IBuyer {
@@ -36,6 +43,7 @@ export class Buyer {
     this.email = "";
     this.phone = "";
     this.address = "";
+    this.events.emit('buyer:changed');
   }
 
   validateData(): TErrors {
