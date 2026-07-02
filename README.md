@@ -308,7 +308,7 @@ Presenter - презентер содержит основную логику п
 Методы:  
 `set category(value: string)` - устанавливает категорию товара.  
 `set image(value: string)` - устанавливает изображение товара.  
-`set text(value: string)` - устанавливает описание товара.  
+`set description(value: string)` - устанавливает описание товара.  
 `set buttonText(value: string)` - устанавливает текст кнопки карточки товара.  
 `set buttonDisabled(value: boolean)` - изменяет состояние кнопки карточки товара.  
 

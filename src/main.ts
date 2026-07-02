@@ -17,10 +17,13 @@ import { OrderForm } from "./components/view/OrderForm.ts";
 import { ContactsForm } from "./components/view/ContactsForm.ts";
 import { OrderSuccess } from "./components/view/OrderSuccess.ts";
 
+import { EventEmitter } from "./components/base/Events.ts";
+import { cloneTemplate, createElement, ensureElement } from "./utils/utils.ts";
+
 import { apiProducts } from "./utils/data.ts";
 import { ApiData } from "./components/ApiData.ts";
 import { Api } from "./components/base/Api.ts";
-import { API_URL } from "./utils/constants.ts";
+import { API_URL, CDN_URL } from "./utils/constants.ts";
 
 import { IApi, IResponseData } from "./types/index.ts";
 
@@ -73,10 +76,11 @@ console.log(
 
 console.log("Получаем данные с сервера");
 const catalog = new Catalog();
+const api: IApi = new Api(API_URL);
+const apiData = new ApiData(api);
 
 async function init(): Promise<void> {
-  const api: IApi = new Api(API_URL);
-  const apiData = new ApiData(api);
+
   const response: IResponseData = await apiData.getData();
 
   console.log("Данные полученные с сервера: ", response);

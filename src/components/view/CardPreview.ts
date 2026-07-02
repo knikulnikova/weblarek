@@ -62,7 +62,7 @@ export class CardPreview extends Card<TCardPreview> {
     );
   }
 
-  set text(value: string) {
+  set description(value: string) {
     this.textElement.textContent = value;
   }
 
