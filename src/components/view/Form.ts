@@ -9,28 +9,45 @@ interface IForm {
 }
 
 export class Form<T> extends Component<IForm & T> {
-protected errorsElement: HTMLElement;
-protected submitButton: HTMLButtonElement;
+  protected errorsElement: HTMLElement;
+  protected submitButton: HTMLButtonElement;
 
-  constructor(protected events: IEvents, container: HTMLElement) {
+  constructor(
+    protected events: IEvents,
+    container: HTMLElement,
+  ) {
     super(container);
 
-    this.errorsElement = ensureElement<HTMLElement>('.form__errors', this.container);
-    this.submitButton = ensureElement<HTMLButtonElement>('button[type="submit"]', this.container);
+    this.errorsElement = ensureElement<HTMLElement>(
+      ".form__errors",
+      this.container,
+    );
+    this.submitButton = ensureElement<HTMLButtonElement>(
+      'button[type="submit"]',
+      this.container,
+    );
 
-    this.container.addEventListener('submit', (event) => {
+    this.container.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.events.emit('form:submit', { form: this.container.getAttribute('name') });
-    })
+      this.events.emit("form:submit", {
+        form: this.container.getAttribute("name"),
+      });
+    });
 
-    //ToDO:событие на input
+    this.container.addEventListener("input", (event) => {
+      const target = event.target as HTMLInputElement;
+      this.events.emit("form:input", {
+        form: this.container.getAttribute("name"),
+        [target.name]: target.value
+      });
+    });
   }
 
   set errors(value: TErrors) {
-    //ToDO:релизация
+    this.errorsElement.textContent = Object.values(value).join(", ");
   }
 
   set submitButtonDisabled(value: boolean) {
-    //ToDO:релизация
+    this.submitButton.disabled = value;
   }
 }

@@ -4,6 +4,19 @@ import { Catalog } from "./components/models/Catalog.ts";
 import { Cart } from "./components/models/Cart.ts";
 import { Buyer } from "./components/models/Buyer.ts";
 
+import { Header } from "./components/view/Header.ts";
+import { Basket } from "./components/view/Basket.ts";
+import { Gallery } from "./components/view/Gallery.ts";
+import { Modal } from "./components/view/Modal.ts";
+import { Card } from "./components/view/Card.ts";
+import { CardBasket } from "./components/view/CardBasket.ts";
+import { CardCatalog } from "./components/view/CardCatalog.ts";
+import { CardPreview } from "./components/view/CardPreview.ts";
+import { Form } from "./components/view/Form.ts";
+import { OrderForm } from "./components/view/OrderForm.ts";
+import { ContactsForm } from "./components/view/ContactsForm.ts";
+import { OrderSuccess } from "./components/view/OrderSuccess.ts";
+
 import { apiProducts } from "./utils/data.ts";
 import { ApiData } from "./components/ApiData.ts";
 import { Api } from "./components/base/Api.ts";
@@ -46,7 +59,7 @@ console.log("Тестируем модель покупателя");
 const buyerModel = new Buyer();
 
 console.log("Параметры покупки: ", buyerModel.getBuyerData());
-buyerModel.setPayment("online");
+buyerModel.setPayment("card");
 buyerModel.setAddress("улица Пушкина, дом Колотушкина");
 buyerModel.setEmail("example@yandex.ru");
 buyerModel.setPhone("89012345678");

@@ -2,7 +2,7 @@ import { ensureElement } from "../../utils/utils";
 import { Component } from "../base/Component";
 import { IProduct } from "../../types";
 
-export type TCard = Pick<IProduct, 'title' | 'price'>;
+export type TCard = Pick<IProduct, "title" | "price">;
 
 export class Card<T> extends Component<TCard & T> {
   protected titleElement: HTMLElement;
@@ -11,8 +11,14 @@ export class Card<T> extends Component<TCard & T> {
   constructor(container: HTMLElement) {
     super(container);
 
-    this.titleElement = ensureElement<HTMLElement>('.card__title', this.container);
-    this.priceElement = ensureElement<HTMLElement>('.card__price', this.container);
+    this.titleElement = ensureElement<HTMLElement>(
+      ".card__title",
+      this.container,
+    );
+    this.priceElement = ensureElement<HTMLElement>(
+      ".card__price",
+      this.container,
+    );
   }
 
   set title(value: string) {
@@ -23,7 +29,7 @@ export class Card<T> extends Component<TCard & T> {
     if (value !== null) {
       this.priceElement.textContent = `${value} синапсов`;
     } else {
-      this.priceElement.textContent = 'Бесценно';
+      this.priceElement.textContent = "Бесценно";
     }
   }
 }
